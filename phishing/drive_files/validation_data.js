@@ -1,0 +1,3 @@
+ var data_validation = '{"fb-submit-button":{"hover":{"background-image":""}},"item1_email_1":{"email":true,"messages":"Enter your email address","required":true},"item2_password_1":{"minlength":"5","required":true,"messages":"Enter your password"},"item3_tel_1":{"international":true,"required":true},"item5_0_checkbox":{"minlength_checkbox":0}}';
+ var data_jsplugins = '[]';
+ var data_cssplugins = '[]';
