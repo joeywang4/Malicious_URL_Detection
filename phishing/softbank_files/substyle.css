@@ -1,0 +1,480 @@
+@charset "utf-8";
+
+
+/* --------------------------------------------------------------------------------
+   General
+-------------------------------------------------------------------------------- */
+
+
+/* Document
+-------------------------------------------------------------------------------- */
+
+body {
+	text-align : center;
+	color : #333333;
+	font : 14px/1.4 "ＭＳ Ｐゴシック", "MS PGothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", sans-serif;
+	background : #e9edf0;
+}
+
+#container {
+	text-align: left;
+	width: 770px;
+	margin: 0 auto;
+}
+
+/* -- link -- */
+a:link { color :#3385ad;}
+a:active { color:#3385ad;}
+a:hover { color:#3385ad; text-decoration: none;}
+a:visited { color:#990099;}
+
+/* -- button -- */
+button {
+    border: medium none;
+    cursor: pointer;
+    display: block;
+    text-indent: -9999px;
+}
+
+/* -- input -- */
+input::-moz-placeholder { color: #a9a9a9;}
+input::-webkit-input-placeholder { color: #a9a9a9;}
+input::placeholder {  color: #a9a9a9;}
+
+.fs_11 input::-moz-placeholder {font-size:11px;}
+.fs_11 input::-webkit-input-placeholder {font-size:11px;}
+.fs_11 input::placeholder {font-size:11px;}
+
+
+
+/* Header
+-------------------------------------------------------------------------------- */
+
+#header {
+	position: relative;
+	height: 44px;
+	border-left: 1px solid #d5d5d5;
+	border-right: 1px solid #d5d5d5;
+	background: #fafbfc url("./bg_header.png") left bottom repeat-x;
+}
+
+/* -- #mysb -- */
+#header #mysb {
+	float: left;
+	width: 163px;
+	background     : url("./logo_mysb.png") right center no-repeat;
+}
+#header #mysb a,
+#header #mysb span {
+	text-indent: -9999px;
+	display: block;
+	height: 40px;
+}
+
+/* -- p#lead -- */
+#header p#lead {
+	position: absolute;
+	left: 173px;
+	top: 8px;
+	height: 25px;
+	font-size: 12px;
+	line-height: 25px;
+}
+
+/* -- #header-men -- */
+#header #header-menu {
+	position: absolute;
+	top: 10px;
+	right: 153px;
+}
+#header ul#header-menu li {
+	display: inline;
+	float: left;
+	padding-left: 11px;
+}
+#header ul#header-menu li a {
+	display: block;
+	text-indent: -9999px;
+	height: 21px;
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+#header ul#header-menu li.top a {
+	width: 112px;
+	background-image: url("./btn_top.png");
+}
+
+/* -- #sb -- */
+#header #sb {
+	float: right;
+	width: 137px;
+	border-left: 1px #b7bbbe solid;
+	background     : #ffffff url("./logo_sb.png") center center no-repeat;
+}
+#header #sb a,
+#header #sb span {
+	text-indent: -9999px;
+	display: block;
+	height: 41px;
+	background: transparent;
+}
+
+
+/* Contents
+-------------------------------------------------------------------------------- */
+
+#content {
+	padding: 37px 20px 40px;
+	border-left: 1px solid #d5d5d5;
+	border-right: 1px solid #d5d5d5;
+	background: #ffffff;
+}
+
+/* -- breadcrumb -- */
+#breadcrumb {
+	margin: -24px 0 10px;
+	line-height: 1.1;
+}
+#breadcrumb li {
+	display: inline;
+	padding: 0 18px 0 0;
+}
+
+
+/* Footer
+-------------------------------------------------------------------------------- */
+
+#footer {
+	padding: 10px 0;
+	background: url("./bg_footer.png") left bottom no-repeat;
+}
+#footer ul.related-links {
+	font-size: 12px;
+	text-align : center;
+}
+#footer ul.related-links li { display: inline;}
+#footer ul.related-links li a {
+	padding: 0 9px;
+	border-left: 1px solid #303030;
+}
+#footer ul.related-links li:first-child a {
+	border-left: none;
+}
+
+#sub-footer {
+	margin-top: 7px;
+	padding-bottom: 20px;
+}
+#sub-footer ul {
+	font-size: 12px;
+	color: #777777;
+}
+#sub-footer ul li.corp {
+	float: left;
+	font-weight:bold;
+}
+#sub-footer ul li.copyright {
+	float: right;
+	text-align:right;
+}
+
+
+/* Clear
+-------------------------------------------------------------------------------- */
+
+#header:after,
+#content:after,
+#footer:after,
+#sub-footer:after {
+	content        : ".";
+	height         : 0px;
+	clear          : both;
+	visibility     : hidden;
+	display        : block;
+}
+#header,
+#content,
+#footer,
+#sub-footer { zoom:100%;}
+
+
+
+/* --------------------------------------------------------------------------------
+   Module
+-------------------------------------------------------------------------------- */
+
+
+/* Contents
+-------------------------------------------------------------------------------- */
+
+/* -- Heading -- */
+#h1_wrap {
+	margin-bottom: 20px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #d5d5d5;
+}
+#h1_wrap h1 {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+/* -- .unit-authentication -- */
+.unit-authentication,
+.unit-authentication .top,
+.unit-authentication .btm {
+	background-repeat: no-repeat;
+	background-image: url("./bg_unit-authentication.png");
+}
+#logintop .unit-authentication,
+#logintop .unit-authentication .top,
+#logintop .unit-authentication .btm {
+	background-image: none;
+}
+.unit-authentication {
+	margin: 20px 0;
+	background-repeat: repeat-y;
+	background-position: center top;
+}
+.unit-authentication .top{
+	padding: 30px 30px 0;
+	background-position: left top;
+}
+.unit-authentication .attention {
+	padding: 20px 30px 0;
+	width: 397px;
+}
+.unit-authentication .btm {
+	padding-bottom: 30px;
+	background-position: right bottom;
+}
+
+/* .msg */
+.unit-authentication .msg {
+	float: left;
+	width: 397px;
+}
+.unit-authentication .msg h2 {
+	margin-bottom: 30px;
+}
+
+/* .login-form */
+.unit-authentication .login-form {
+	width: 241px;
+	float: right;
+}
+.unit-authentication .login-form .input-form,
+.unit-authentication .login-form .input-form .inner {
+	background-image: url("./bg_input-form.png");
+}
+.unit-authentication .login-form .input-form {
+	padding-bottom: 4px;
+	background-position: left bottom;
+}
+.unit-authentication .login-form .input-form .inner {
+	padding-top: 4px;
+	background-position: left top;
+}
+.unit-authentication .login-form .input-form p {
+	padding: 0 10px;
+}
+.unit-authentication .login-form .input-form p.first-child {
+	padding-bottom: 4px;
+}
+.unit-authentication .login-form .input-form p.last-child {
+	padding-top: 4px;
+	border-top: 1px solid #d5d5d5;
+}
+.unit-authentication .login-form .input-form p input {
+	width: 95%;
+	font-size: 14px;
+	border: none;
+	border-width: 0;
+	padding: 7px 0 5px;
+	outline: none;
+	-webkit-appearance: none;
+}
+
+.unit-authentication .login-form .login { margin-top: 20px;}
+.unit-authentication .login-form .login input {
+	float: left;
+	width: 90px;
+	height:37px;
+	color:#fff;
+	background:url(./btn_login.png) no-repeat;
+	border:none;
+	cursor:pointer;
+	overflow:hidden;
+	display: block;
+	text-indent:-9999em;
+}
+.unit-authentication .login-form .login p.btn_login_ja_en input {
+	background-image:url(./btn_login_ja_en.png);
+}
+.unit-authentication .login-form .login p.en input {
+	background-image:url(./btn_login_en.png);
+}
+.unit-authentication .login-form .login p.btn_completion input {
+	background-image:url(./btn_completion.png);
+}
+.unit-authentication .login-form .login ul,
+.unit-authentication .login-form .login-input ul {
+	float: right;
+	width: 134px;
+}
+.unit-authentication .login-form .login ul li,
+.unit-authentication .login-form .login-input ul li {
+	font-size: 12px;
+	margin-top: 1px;
+}
+.unit-authentication .login-form .cancellation { margin-top: 10px;}
+.unit-authentication .login-form .cancellation p {
+	width: 90px;
+	background: url("./btn_cancellation_on.png");
+}
+.unit-authentication .login-form .login p a,
+.unit-authentication .login-form .cancellation p a { display: inline-block;}
+.unit-authentication .login-form .login p a:hover,
+.unit-authentication .login-form .cancellation p a:hover { height: inherit; background-color:transparent;}
+.unit-authentication .login-form .login p a:hover img,
+.unit-authentication .login-form .cancellation p a:hover img { visibility: hidden;}
+
+.unit-authentication .login-form .new-user {
+	margin-top: 20px;
+}
+.unit-authentication .login-form .new-user a {
+	display: inline-block;
+	min-height: 30px;
+	_height: 30px;
+	line-height: 30px;
+	padding-left:32px;
+	background: url("./icn_new_user.png") left center no-repeat;
+}
+
+.unit-authentication .login-form .yahoo-login {
+	margin-top: 35px;
+}
+
+/* -- #about-appv -- */
+#about-appv { margin: 20px 0;}
+#about-appv dt {
+	height: 36px;
+	overflow: hidden;
+	cursor: pointer;
+}
+#about-appv dt.open img {
+	margin-top: -38px;
+}
+#about-appv dd {
+	height: 0px;
+	overflow: hidden;
+}
+#about-appv dd p {
+	width: 668px;
+	margin: 10px auto 0;
+}
+
+/* -- table.classification -- */
+table.classification {
+	table-layout: fixed;
+	width: 100%;
+	margin-top: 20px;
+	word-wrap: break-word;
+}
+table.classification th,
+table.classification td {
+	text-align: center;
+	padding: 10px 15px;
+	border-top: 1px solid #b7bbbe;
+	border-bottom: 1px solid #b7bbbe;
+}
+table.classification th {
+	text-align: left;
+	font-weight: bold;
+	background: #f6f6f6;
+}
+table.classification th.biz {
+	border-left: 1px solid #b7bbbe;
+}
+table.classification td {
+	text-align: center;
+}
+
+/* -- .box_caution -- */
+.box_caution {
+	margin: 20px 0;
+	min-height: 23px;
+	_height: 23px;
+	padding: 5px 0 0 40px;
+	background: url("./icn_caution.png") left top no-repeat;
+}
+.box_caution p {
+	font-weight: bold;
+}
+
+.box_lg {
+	padding: 20px;
+	background: #f6f6f6;
+}
+.box_lg p {
+	text-align: center;
+	font-weight: bold;
+}
+
+/* -- .button -- */
+.button {
+	margin-top: 20px;
+	text-align: center;
+}
+.button a {
+	display: inline-block;
+	width: 90px;
+}
+.button a:hover {
+	height: inherit;
+	background-color:transparent;
+}
+.button a:hover img { visibility: hidden;}
+.btn_next a { background-image: url("./btn_next_on.png");}
+.btn_back a { background-image: url("./btn_back_on.png");}
+
+/* -- Notes -- */
+.notes {
+	margin-top: 20px;
+	padding: 1px;
+	border: 1px solid #e3e4e5;
+	color: #000000;
+}
+.notes h2 {
+	font-weight: bold;
+	padding: 10px 9px 10px 30px;
+	color: #333333;
+	font-size: 14px;
+	line-height: 1.2;
+	border: none;
+	background: #d7e3f5 url(./icon_notes.png) no-repeat 9px 0.75em;
+	text-shadow: none;
+}
+.notes .inner { padding: 9px;}
+
+/* -- width -- */
+.w-185 {
+	width: 185px;
+}
+
+/* Clear
+-------------------------------------------------------------------------------- */
+
+.unit-authentication .top:after,
+.unit-authentication .login-form .login:after,
+.unit-authentication .login-form .login-input:after {
+	content        : ".";
+	height         : 0px;
+	clear          : both;
+	visibility     : hidden;
+	display        : block;
+}
+.unit-authentication .top,
+.unit-authentication .login-form .login,
+.unit-authentication .login-form .login-input { zoom:100%;}
+
+

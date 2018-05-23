@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+/* ================================================================================
+
+ @Document       reset.css
+ @Version        v13a
+ @Last Modify    2013-10-15 10:00:00
+ @Copyright      Copyright (c) 2013 SoftBank Mobile Corp.
+
+================================================================================ */
+
+
+body,
+div,
+ul,ol,li,
+h1,h2,h3,h4,h5,h6,
+p,a,
+img,
+table,th,td,caption,
+dl,dt,dd {
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	font-style:normal;
+}
+
+body {
+	font-family: Meiryo, "Hiragino Kaku Gothic ProN", sans-serif;
+	line-height: 1.4;
+	color: #333333;
+	font-size: 87.5%;
+	-webkit-text-size-adjust:none;
+}
+
+body sup {
+	vertical-align:text-top;
+	position:relative;
+	top:-4px;
+}
+
+img {
+	border:0;
+	vertical-align: bottom;
+}
+
+ul,
+ul ul,
+ul ul ul { list-style: none;}
+
+a { outline: none;}
+em { font-style: normal;}
+
+table th,table td,select,input,textarea,button { font-size: inherit;}
+table { border-collapse: collapse; border-spacing: 0;}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	table.contract-info { border-collapse: separate; border-spacing: 0;}
+}
+
+form, input, textarea, label, select, option {
+	margin: 0;
+	padding: 0;
+	vertical-align: middle;
+}
+input, select { padding: 1px; }
+
+
