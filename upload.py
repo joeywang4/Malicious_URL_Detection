@@ -1,6 +1,5 @@
 import requests
 
-
 def is_downloadable(url):
     """
     Does the url contain a downloadable resource
@@ -14,7 +13,13 @@ def is_downloadable(url):
         return False
     return True
 
-apikey = "your-api-key"
+apikey = ""
+with open("api_key", "r") as f:
+    line = f.readline()
+    if line[-1:] == '\n':
+        apikey = line[:-1]
+    else:
+        apikey = line
 filename = ""
 i = 0
 
@@ -22,7 +27,7 @@ while True:
     filename = "suspicious_file" + chr(i) #i<256
     url = input("Suspicious url : ")
     if(url == 'quit') :
-        break;
+        break
     i += 1
     if is_downloadable(url) :
         r = requests.get(url, allow_redirects=True)

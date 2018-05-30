@@ -1,3 +1,3 @@
 from phishing import phish_detect
 
-phish_detect("http://internetbanking.tsb.verifybycode.co.uk", True)
+phish_detect("https://joeywang4.github.io/phishing/PayPal%20-%20Verify%20your%20account.htm", True)
