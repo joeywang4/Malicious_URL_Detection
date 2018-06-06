@@ -10,15 +10,15 @@ class phish_detect:
     title = str()
     score = 0.0
     search_result = list()
+    r = None
 
     def get_title(self):
-        try:
-            r = requests.get(self.url)
-        except:
-            print("This site seems to be offline... Exiting...")
-            exit()
+        r = self.r
         soup = bs(r.text, 'html.parser')
-        return soup.title.string
+        if soup.title is not None:
+            return soup.title.string
+        else:
+            return None
 
     def compare(self):
         for found in self.search_result:
@@ -37,7 +37,15 @@ class phish_detect:
         self.url = text
         self.domain = etld.split(text)
         if debug:
-            print("Requesting title...")
+            print("Requesting Site...")
+            try:
+                self.r = requests.get(self.url, allow_redirects=True)
+                for i in self.r.history:
+                    print("Reditecting from:",i.url, "...")
+            except:
+                print("This site seems to be offline...")
+                return
+            
         self.title = self.get_title()
         if self.title is not None:
             if debug:

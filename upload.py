@@ -13,13 +13,15 @@ def is_downloadable(url):
         return False
     return True
 
-apikey = ""
+apikey = "781839844fa3b5e99b166234425fb573a8b0bf8ffb3f45b23653578c284dfc50"
+'''
 with open("api_key", "r") as f:
     line = f.readline()
     if line[-1:] == '\n':
         apikey = line[:-1]
     else:
         apikey = line
+'''
 filename = ""
 i = 0
 
