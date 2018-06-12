@@ -3,7 +3,8 @@ from dbd import js_detect
 from pyjsparser.parser import PyJsParser
 
 
-js_detect("https://ceiba.ntu.edu.tw/index.php", True)
+d = js_detect("https://ceiba.ntu.edu.tw/index.php", True)
+print(d.call_count)
 
 
 '''

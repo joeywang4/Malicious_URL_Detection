@@ -69,10 +69,13 @@ class js_detect:
     url = ""
     debug = True
     call_count = list()
+    sub_func_dict = dict()
     parsed = ""
 
-    def stat(self):
-        call_count = []
+    def stat(self, script):
+        read_dic(script)
+        self.sub_func_dict = subFuncDict
+        self.call_count  = [(k, FuncCallTimes[k]) for k in sorted(FuncCallTimes, key=FuncCallTimes.get, reverse=True)]
         return
 
     def __init__(self, url, debug):
@@ -94,8 +97,4 @@ class js_detect:
 
         p = PyJsParser()
         a = p.parse(tot_script)
-        read_dic(a)
-        print(subFuncDict)
-        print()
-        print()
-        print(FuncCallTimes)
+        self.stat(a)

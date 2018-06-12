@@ -1,7 +1,16 @@
 import requests
 import json
 
-api_key = "AIzaSyAlB0vEbTkpNyfPg2Fc_xhHk9oofWBPabc"
+api_key = ""
+with open('api_key', 'r') as f:
+    for line in f:
+        line = line.split()
+        if line[0] == 'google':
+            api_key = line[1]
+    if api_key == "":
+        print("No API key!")
+        exit()
+
 api_url = "https://safebrowsing.googleapis.com/v4/threatMatches:find?key={}".format(api_key)
 url = "http://bamazons.com/bigcartel/BigCartel.zip"
 
