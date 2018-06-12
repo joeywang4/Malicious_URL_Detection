@@ -1,6 +1,7 @@
 from pyjsparser import PyJsParser
 import requests
 from bs4 import BeautifulSoup as bs
+from urllib.parse import urljoin
 
 subFuncDict = {}
 FuncCallTimes = {}
@@ -39,6 +40,10 @@ def read_dic(dic):
         funcname = ""
         tmp = dic['callee']
         while tmp['type'] != 'Identifier':
+            if 'property' not in tmp:
+                print("No Key!!!")
+                print(dic)
+                exit()
             funcname = tmp['property']['name'] + '.' + funcname
             tmp = tmp['object']
         funcname = tmp['name'] + '.' + funcname
@@ -64,6 +69,9 @@ def read_list(li):
             read_list(item)
     return
 
+def get_outer_js(url):
+    r = requests.get(url)
+    return r.text
 
 class js_detect:
     url = ""
@@ -89,12 +97,24 @@ class js_detect:
         except:
             print("This site seems to be offline...")
             return
-
+        parser = PyJsParser()
         soup = bs(r.text, 'html.parser')
         tot_script = ""
         for script in soup.find_all('script'):
-            tot_script += script.get_text()
-
-        p = PyJsParser()
-        a = p.parse(tot_script)
-        self.stat(a)
+            out = ""
+            try:
+                out = script['src']
+                if out[:4] != "http":
+                    tot_script = get_outer_js(urljoin(self.url, out))
+                else:
+                    tot_script = get_outer_js(out)
+            except:
+                tot_script = script.get_text()
+            try:
+                if tot_script != "":
+                    a = parser.parse(tot_script)
+                    self.stat(a)
+            except:
+                print("Encounter error while parsing {}".format(out))
+                print(a)
+                exit()
