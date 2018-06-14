@@ -3,11 +3,12 @@ import requests
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
 
+
+##########計算function次數##############
 subFuncDict = {}
 FuncCallTimes = {}
 #funcDeclare：現在在那些FunctionDeclartion下
 funcDeclare = []
-
 def addFuncCallTimes(funcname):
     if funcname not in FuncCallTimes:
         FuncCallTimes[funcname] = 1
@@ -70,23 +71,86 @@ def read_list(li):
         elif isinstance(item, list):
             read_list(item)
     return
+####################################
 
 def get_outer_js(url):
     r = requests.get(url)
     return r.text
 
+##########計算字元次數##############
+CharFreqDict = {}
+def count_char(sc):
+    for char in sc:
+        if char not in CharFreqDict:
+            CharFreqDict[char] = 1
+        else:
+            CharFreqDict[char] += 1
+####################################
+
+##########計算字串內容次數##############
+StringLenDict = {}
+def read_dic_2(dic):
+    if not isinstance(dic, dict):
+        return
+    for key in dic.keys():
+        item = dic[key]
+        if isinstance(item, dict):
+            read_dic_2(item)
+        elif isinstance(item, list):
+            read_list_2(item)
+        elif key == 'value' and isinstance(item, str) :
+            num = str(len(dic['value']))
+            if num not in StringLenDict:
+                StringLenDict[num] = 1
+            else:
+                StringLenDict[num] += 1
+    return
+
+def read_list_2(li):
+    if not isinstance(li, list):
+        return
+    for item in li:
+        if isinstance(item, dict):
+            read_dic_2(item)
+        elif isinstance(item, list):
+            read_list_2(item)
+    return
+def cmp_to_key(mycmp):
+    'Convert a cmp= function into a key= function'
+    class K:
+        def __init__(self, obj, *args):
+            self.obj = obj
+        def __lt__(self, other):
+            return mycmp(self.obj, other.obj) < 0
+        def __gt__(self, other):
+            return mycmp(self.obj, other.obj) > 0
+        def __eq__(self, other):
+            return mycmp(self.obj, other.obj) == 0
+        def __le__(self, other):
+            return mycmp(self.obj, other.obj) <= 0
+        def __ge__(self, other):
+            return mycmp(self.obj, other.obj) >= 0
+        def __ne__(self, other):
+            return mycmp(self.obj, other.obj) != 0
+    return K
+def string_to_int_compare(s1, s2):
+    return int(s1) - int(s2)
+
+#####################################
 class js_detect:
     url = ""
     debug = True
     call_count = list()
     sub_func_dict = dict()
+    char_freq_dict = dict()
+    string_len_dict = dict()
     parsed = ""
 
+    '''
     def stat(self, script):
         read_dic(script)
-        self.sub_func_dict = subFuncDict
-        self.call_count  = [(k, FuncCallTimes[k]) for k in sorted(FuncCallTimes, key=FuncCallTimes.get, reverse=True)]
         return
+    '''
 
     def __init__(self, url, debug):
         self.url = url
@@ -115,13 +179,21 @@ class js_detect:
             if True:
                 try:
                     if tot_script != "":
+                        count_char(tot_script)
                         a = parser.parse(tot_script)
-                        self.stat(a)
+                        read_dic_2(a)
+                        read_dic(a)
                 except:
                     print("Encounter error while parsing {}".format(out))
                     #print(a)
                     exit()
             else:
                 if tot_script != "":
+                        count_char(tot_script)
                         a = parser.parse(tot_script)
-                        self.stat(a)
+                        read_dic(a)
+                        read_dic_2(a)
+        self.sub_func_dict = subFuncDict
+        self.call_count  = [(k, FuncCallTimes[k]) for k in sorted(FuncCallTimes, key=FuncCallTimes.get, reverse=True)]
+        self.char_freq_dict = [(k, CharFreqDict[k]) for k in sorted(CharFreqDict, key=CharFreqDict.get, reverse=True)]
+        self.string_len_dict = [(k, StringLenDict[k]) for k in sorted(StringLenDict, key=cmp_to_key(string_to_int_compare), reverse=True)]
