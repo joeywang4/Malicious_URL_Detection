@@ -3,10 +3,13 @@ from dbd import js_detect
 from pyjsparser.parser import PyJsParser
 
 
-d = js_detect("http://book.tpml.edu.tw/webpac/webpacIndex.jsp", True)
+d = js_detect("https://buddymeter.com/", True)
 print(d.call_count)
 
 '''
+subFuncDict = dict()
+FuncCallTimes = dict()
+funcDeclare = list()
 def addFuncCallTimes(funcname):
     if funcname not in FuncCallTimes:
         FuncCallTimes[funcname] = 1

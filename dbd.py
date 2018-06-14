@@ -36,14 +36,16 @@ def addsubFuncToFunc(subfuncname):
 def read_dic(dic):
     if not isinstance(dic, dict):
         return
+    if 'type' not in dic:
+        return
     if dic['type'] == 'CallExpression':
         funcname = ""
         tmp = dic['callee']
         while tmp['type'] != 'Identifier':
             if 'property' not in tmp:
-                print("No Key!!!")
-                print(dic)
-                exit()
+                return
+            elif 'name' not in tmp['property']:
+                return
             funcname = tmp['property']['name'] + '.' + funcname
             tmp = tmp['object']
         funcname = tmp['name'] + '.' + funcname
@@ -110,11 +112,16 @@ class js_detect:
                     tot_script = get_outer_js(out)
             except:
                 tot_script = script.get_text()
-            try:
+            if True:
+                try:
+                    if tot_script != "":
+                        a = parser.parse(tot_script)
+                        self.stat(a)
+                except:
+                    print("Encounter error while parsing {}".format(out))
+                    #print(a)
+                    exit()
+            else:
                 if tot_script != "":
-                    a = parser.parse(tot_script)
-                    self.stat(a)
-            except:
-                print("Encounter error while parsing {}".format(out))
-                print(a)
-                exit()
+                        a = parser.parse(tot_script)
+                        self.stat(a)
