@@ -2,6 +2,7 @@ from pyjsparser import PyJsParser
 import requests
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urljoin
+from regex import regex
 
 
 ##########計算function次數##############

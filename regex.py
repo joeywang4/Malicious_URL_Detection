@@ -16,7 +16,8 @@ class regex:
                         print("Error parsing regex file of line: {}".format(line))
 
     def match(self, text):
+        result = []
         for pat in self.pattern_tuple:
-            if pat[1].match(text) is not None:
-                return pat[0]
-        return None
+            if pat[1].search(text) is not None:
+                result.append(pat[0])
+        return result

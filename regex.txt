@@ -1,29 +1,29 @@
 ## Exploit Kits / Drive-by downloads
 URI_Bloodlust_Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)
 URI_GrandSoft_Exploit_Kit	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$
-URI_Magnigate/Magnitude_EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social)\/
+URI_Magnigate/Magnitude_EK	http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social)
 URI_RIG_Exploit_Kit	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}
 SourceCode_GrandSoft_Exploit_Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)
 IP_GrandSoft	185\.17\.122\.212
 Headers_GreenFlash_Sundown	5a0c76d6-117
 
 ## Web Miners / Drive-by mining
-URI_Coin_Have coin-have\.com\/
-URI_Coinhive	^https:\/\/((cnhv\.co|coin-?hive\.com)|ws[0-9]{1,3}\.coinhive\.com\/proxy)
+URI_Coin_Have coin-have\.com
+URI_Coinhive	https:\/\/((cnhv\.co|coin-?hive\.com)|ws[0-9]{1,3}\.coinhive\.com\/proxy)
 URI_CoinImp_Web_Miner	hashing\.win\/|pastebin\.com\/raw\/VXm4051W
-URI_Crypto-Loot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro\/
+URI_Crypto-Loot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro
 URI_DeepMiner	\/deepMiner.js$
 URI_Drive-by_Mining_(Nulled_WP)	\/assets\/js\/jquory\.js
-URI_JSE-Coin (load.)?jsecoin\.com\/
-URI_Web_Miner	\/vbb\/me0w.js|allfontshere.press\/fonts\/|eth-pocket\.(com|de|eu):8585|cryptaloot\.pro\/|siteverification\.online\/lib\/info\.js|uoldid\.ru|omine\.ga\/|upgraderservices\.cf\/
+URI_JSE-Coin (load.)?jsecoin\.com
+URI_Web_Miner	\/vbb\/me0w.js|allfontshere.press\/fonts\/|eth-pocket\.(com|de|eu):8585|cryptaloot\.pro\/|siteverification\.online\/lib\/info\.js|uoldid\.ru|omine\.ga\/|upgraderservices\.cf
 URI_PPoi_Web_Miner	ppoi\.org\/lib\/miner\.min\.js
 SourceCode_Coinhive	\[\["wss:\/\/ws[0-9]{1,3}\.coinhive\.com\/proxy",
-SourceCode_CoinImp	<script src="https:\/\/www\.hashing\.win\/
+SourceCode_CoinImp	<script src="https:\/\/www\.hashing\.win
 SourceCode_Drive-by_Mining	webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php
 SourceCode_Drive-by_Mining_(Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode_Drupal_Drive-by_Mining	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf
-SourceCode_Drive-by_Mining_(JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
-SourceCode_Drive-by_Mining_(Coin-Have)	<script src="https:\/\/coin-have\.com\/c\/
+SourceCode_Drive-by_Mining_(JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}
+SourceCode_Drive-by_Mining_(Coin-Have)	<script src="https:\/\/coin-have\.com\/c
 SourceCode_Drive-by_Mining_(Nulled-WP)	\/assets\/js\/jquory\.js
 SourceCode_vBulletin_Drive-by_Mining	<script async="async" src="http:\/\/allfontshere.press
 SourceCode_Web_Miner	\|\| [a-z]; this._useWASM=this.hasWASMSupport\(\) && !a.forceASMJS;
@@ -50,11 +50,11 @@ URI_Etags/Coins_LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/ap
 URI_Ngay_Campaign	\/([a-zA-Z0-9]{6}\?source=([0-9]{16}&external_id=\[CPA\]|[0-9]{8}&creative_id=)|gateway\.php\?frm=dm&token=eyJ|\?_subid=[0-9a-z]{16,20}&_token=uuid_[0-9a-z]{16,20}_)
 URI_PopCash_Redirection	\.club\/B3Lhcr\?
 URI_FakeUpdates_Redirection	\/jquery\?frm=script&se_referrer=
-URI_Seamless_Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D
-URI_Seamless_Gate	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php
+URI_Seamless_Pre-gate	https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D
+URI_Seamless_Gate	https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php
 URI_ShoppersStop	\.(science|trade|ml|accountant|website)\/men-shop\.php$
 URI_Slyip_Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=
-SourceCode_BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/
+SourceCode_BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}
 SourceCode_Compromised_(FakeUpdates)_site	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode_FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php
 SourceCode_Fobos_Campaign	if\(ewe?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9]'; scc = document
@@ -72,5 +72,5 @@ SourceCode_GanCrab_Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/
 IP_NetSupport_Manager_RAT	94\.242\.198\.167
 
 ## Foreign formats / generic obfuscation
-URI_Punycode(IDN)	^https?:\/\/xn--[\w\.-]+\/
+URI_Punycode(IDN)	https?:\/\/xn--[\w\.-]+
 SourceCode_Suspicious_Obfuscation	"(,"(\\x\w{2}){1,10}"){4}\];eval\(

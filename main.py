@@ -1,10 +1,15 @@
 from phishing import phish_detect
 from dbd import js_detect
 from pyjsparser.parser import PyJsParser
+from regex import regex
+import browser
 
 
-d = js_detect("https://buddymeter.com/", True)
-print(d.call_count)
+#d = js_detect("http://oil.tnepb.gov.tw/", True)
+#r = regex() #建立正規表達處理物件
+#m = r.match("document.write('https://coin-hive.com');\nalert('coin-have.com')")
+#print(d.call_count, d.char_freq_dict, d.string_len_dict)
+browser.browse("http://159.65.237.98/salvia.i586")
 
 '''
 subFuncDict = dict()
