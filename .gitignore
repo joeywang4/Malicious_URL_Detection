@@ -1,6 +1,7 @@
 .DS_Store
 .vscode/
 .Pip*
+Pipfile.lock
 __pycache__/
 virus
 virus.zip
