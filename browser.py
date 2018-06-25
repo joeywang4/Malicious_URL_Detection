@@ -8,12 +8,12 @@ def clean_up(curr_name):
         if os.path.isdir(curr_name+'/'+f):
             clean_up(curr_name+'/'+f)
             os.rmdir(curr_name+'/'+f)
-            print("Deleated dir: {}".format(curr_name+'/'+f))
+            #print("Deleated dir: {}".format(curr_name+'/'+f))
         else:
             os.remove(curr_name+'/'+f)
-            print("Deleated: {}".format(curr_name+'/'+f))
+            #print("Deleated: {}".format(curr_name+'/'+f))
 
-def browse(url):
+def browse(url, output):
     if 'tmp' in os.listdir():
         clean_up('tmp')
     else:
@@ -33,20 +33,22 @@ def browse(url):
     profile.set_preference("browser.download.manager.showWhenStarting",False)
     profile.set_preference("browser.helperApps.alwaysAsk.force", False)
     # use firefox to get page with javascript generated content
-    with closing(webdriver.Firefox(firefox_profile=profile, executable_path="/Users/joeywang/Desktop/2018Spring/EELab/Final_project/geckodriver")) as browser:
+    with closing(webdriver.Firefox(firefox_profile=profile, executable_path="./geckodriver-linux")) as browser:
         try:
             browser.set_page_load_timeout(5)
             browser.get(url)
             time.sleep(5)
         except:
             if len(os.listdir('tmp')) == 0 and len(browser.page_source) == 0:
-                print("Connection timed out. This site may be offlined.")
+                #print("Connection timed out. This site may be offlined.")
                 return
     
 
         page_source = browser.page_source
-        print("source length: ",len(page_source))
-        if len(page_source) < 100:
-            print("source:", page_source)
+        #print("source length: ",len(page_source))
+        #if len(page_source) < 100:
+            #print("source:", page_source)
         for f in os.listdir('tmp'):
-            print("Downloaded: {}".format(f))
+            output["Malicious Javascript"]["Drive-by-Download"] = 100
+            #print("Downloaded: {}".format(f))
+    return output

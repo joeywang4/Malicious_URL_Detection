@@ -155,14 +155,14 @@ class js_detect:
 
     def __init__(self, url, debug):
         self.url = url
-        if debug:
-            print("Requesting Site...")
+        #if debug:
+            #print("Requesting Site...")
         try:
             r = requests.get(url, allow_redirects=True)
-            for i in r.history:
-                print("Reditecting from:",i.url, "...")
+            #for i in r.history:
+                #print("Reditecting from:",i.url, "...")
         except:
-            print("This site seems to be offline...")
+            #print("This site seems to be offline...")
             return
         parser = PyJsParser()
         soup = bs(r.text, 'html.parser')
@@ -185,7 +185,7 @@ class js_detect:
                         read_dic_2(a)
                         read_dic(a)
                 except:
-                    print("Encounter error while parsing {}".format(out))
+                    #print("Encounter error while parsing {}".format(out))
                     #print(a)
                     exit()
             else:

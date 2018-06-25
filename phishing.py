@@ -4,59 +4,53 @@ import google
 import etld
 from difflib import SequenceMatcher
 
-class phish_detect:
-    url = str()
-    domain = tuple()
-    title = str()
-    score = 0.0
-    search_result = list()
-    r = None
+def get_title(r):
+    soup = bs(r.text, 'html.parser')
+    if soup.title is not None:
+        return soup.title.string
+    else:
+        return None
 
-    def get_title(self):
-        r = self.r
-        soup = bs(r.text, 'html.parser')
-        if soup.title is not None:
-            return soup.title.string
-        else:
-            return None
+def compare(search_result, domain, title):
+    for found in search_result:
+        found_domain = etld.split(found[1])
+        if domain == found_domain:
+            #print("Found site on Google: {}".format(found))
+            score = 0
+            return score
+        d = SequenceMatcher(None, title, found[0])
+        if d.ratio() > 0.75:
+            #print("Found site with similar title: {}".format(found))
+            score = round(100*d.ratio())
+            return score
 
-    def compare(self):
-        for found in self.search_result:
-            found_domain = etld.split(found[1])
-            if self.domain == found_domain:
-                print("Found site on Google: {}".format(found))
-                self.score = 0.0
-                return
-            d = SequenceMatcher(None, self.title, found[0])
-            if d.ratio() > 0.75:
-                print("Found site with similar title: {}".format(found))
-                self.score += 50.0*d.ratio()
-                return
-
-    def __init__(self, text, debug=False):
-        self.url = text
-        self.domain = etld.split(text)
-        if debug:
-            print("Requesting Site...")
-            try:
-                self.r = requests.get(self.url, allow_redirects=True)
-                for i in self.r.history:
-                    print("Reditecting from:",i.url, "...")
-            except:
-                print("This site seems to be offline...")
-                return
-            
-        self.title = self.get_title()
-        if self.title is not None:
-            if debug:
-                print("Searching for google...")
-            self.search_result = google.search(self.title)
-            self.compare()
-
-        if debug:
-            print("Site url: {}".format(self.url))
-            print("Site title: {}".format(self.title))
-            print("Site Domain: {}".format(self.domain))
-            #print("Search result: {}".format(self.search_result))
+def phish_detect(url, debug=False):
+    domain = etld.split(url)
+    score = 0
+    if debug:
+        print("Requesting Site...")
+    try:
+        r = requests.get(url, allow_redirects=True)
+        #for i in r.history:
+            #print("Reditecting from:",i.url, "...")
+    except:
+        #print("This site seems to be offline...")
+        return
         
-        print("Score: {}".format(self.score))
+    title = get_title(r)
+    if title is not None:
+        if debug:
+            print("Searching for google...")
+        search_result = google.search(title)
+        score = compare(search_result, domain, title)
+    if debug:
+        print("Site url: {}".format(url))
+        print("Site title: {}".format(title))
+        print("Site Domain: {}".format(domain))
+        #print("Search result: {}".format(search_result))
+    
+    #print("Score: {}".format(score))
+    return score
+
+if __name__ == '__main__':
+    print(phish_detect("https://sites.google.com/site/ntusands/", False))

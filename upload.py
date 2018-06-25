@@ -12,31 +12,32 @@ def is_downloadable(url):
     if 'html' in content_type.lower():
         return False
     return True
-
-apikey = ""
-with open("api_key", "r") as f:
-    for line in f:
-        line = line.split()
-        if line[0] == 'virus_total':
-            apikey = line[1]
-    if apikey == '':
-        print("No API key!")
-        exit()
+    #if apikey == '':
+        #print("No API key!")
+        #exit()
 
 filename = ""
 i = 0
 
-while True:
-    filename = "suspicious_file" + chr(i) #i<256
-    url = input("Suspicious url : ")
-    if(url == 'quit') :
-        break
-    i += 1
+def upload(url, output):
+    apikey = ""
+    with open("api_key", "r") as f:
+        for line in f:
+            line = line.split()
+            if line[0] == 'virus_total':
+                apikey = line[1]
+    filename = "suspicious_file" #+ chr(i) #i<256
+    #url = input("Suspicious url : ")
+    #if(url == 'quit') :
+        #break
+    #i += 1
     if is_downloadable(url) :
         r = requests.get(url, allow_redirects=True)
     else:
-        print("Url is not downloadable!")
-        continue
+        output["Malicious Download"]["Download"] = False
+        return
+        #print("Url is not downloadable!")
+        
     params = {'apikey': apikey}
     files = {'file': (filename, r.content)}
     response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
@@ -52,13 +53,11 @@ while True:
         #json_response = response.json()
     scan_result = response.json()['scans']
 
-    #print(json_response['scans'])
-    j = count = 0
+    #print(scan_result)
     antiList = list(scan_result.keys())
-    #print(antiList)
     for anti in antiList :
-        if scan_result[anti]['detected'] == True :
-            count += 1
-            print(anti + " detected " + scan_result[anti]['result'])
-        j += 1
-    print("detected rate : " + str(count) + "/" + str(j))
+        output["Malicious Download"][anti] = scan_result[anti]['detected']
+        #print(anti + " detected " + scan_result[anti]['result'])
+        #print("detected rate : " + str(count) + "/" + str(j))
+    output["Malicious Download"]["Download"] = True
+    return output
