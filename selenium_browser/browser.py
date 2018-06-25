@@ -2,6 +2,7 @@ import os
 from contextlib import closing
 from selenium import webdriver
 import time
+import platform
 
 def clean_up(curr_name):
     for f in os.listdir(curr_name):
@@ -14,11 +15,18 @@ def clean_up(curr_name):
             #print("Deleated: {}".format(curr_name+'/'+f))
 
 def browse(url, output):
+    user_os = platform.system()
+    if user_os == "Darwin":
+        suffix = "mac"
+    elif user_os == "Linux":
+        suffix = "linux"
+    else:
+        raise OSError('Unknown OS')
     if 'tmp' in os.listdir():
         clean_up('tmp')
     else:
         os.mkdir('tmp')
-    with open('request_type.txt', 'r') as f:
+    with open('selenium_browser/request_type.txt', 'r') as f:
         MIME_types = f.readline()
         if MIME_types[-2:] == '\n':
             MIME_types = MIME_types[:-2]
@@ -33,7 +41,7 @@ def browse(url, output):
     profile.set_preference("browser.download.manager.showWhenStarting",False)
     profile.set_preference("browser.helperApps.alwaysAsk.force", False)
     # use firefox to get page with javascript generated content
-    with closing(webdriver.Firefox(firefox_profile=profile, executable_path="./geckodriver-linux")) as browser:
+    with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path="selenium_browser/geckodriver-"+suffix)) as browser:
         try:
             browser.set_page_load_timeout(5)
             browser.get(url)

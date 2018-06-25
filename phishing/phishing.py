@@ -1,8 +1,32 @@
 import requests
 from bs4 import BeautifulSoup as bs
-import google
-import etld
+from . import etld
 from difflib import SequenceMatcher
+
+def search(text):
+    content = list()
+    url = "https://www.google.com.tw/search?q={}".format(text)
+    r = requests.get(url)
+    soup = bs(r.text, 'html.parser')
+    div = soup.find("div", {"id": "ires"})
+    div = div.find_all("div", {"class": "g"})
+
+    for d in div:
+        a = d.find('a')
+        for tag in a.find_all(True):
+            tag.unwrap()
+        s = ""
+        for c in a.contents:
+            s += c
+        if s == "":
+            continue
+        index = a['href'].find('&')
+        url = a['href'][7:index]
+        if url == "":
+            pass
+        content.append((s, url))
+    
+    return content
 
 def get_title(r):
     soup = bs(r.text, 'html.parser')
@@ -41,7 +65,7 @@ def phish_detect(url, debug=False):
     if title is not None:
         if debug:
             print("Searching for google...")
-        search_result = google.search(title)
+        search_result = search(title)
         score = compare(search_result, domain, title)
     if debug:
         print("Site url: {}".format(url))

@@ -1,27 +1,22 @@
-from phishing import phish_detect
+from phishing.phishing import phish_detect
 from dbd import js_detect
 from pyjsparser.parser import PyJsParser
-from regex import regex
-import browser
+import selenium_browser.browser as browser
 import sys
 import json
 import upload
 
 
-#d = js_detect("http://oil.tnepb.gov.tw/", True)
-#r = regex() #建立正規表達處理物件
-#m = r.match("document.write('https://coin-hive.com');\nalert('coin-have.com')")
-#print(d.call_count, d.char_freq_dict, d.string_len_dict)
 if len(sys.argv) > 2 or len(sys.argv) == 1:
     print("usage: python3 main.py [target url]")
 else:
     output_json = {"Phishing Site": 0, \
                    "Malicious Download": {}, \
                    "Malicious Javascript": {"Drive-by-Download": 0, "Suspicios Code": 0}}
-    browser.browse(sys.argv[1], output_json)
     d = js_detect(sys.argv[1], True)
     upload.upload(sys.argv[1], output_json)
     output_json["Phishing Site"] = phish_detect(sys.argv[1], False)
+    browser.browse(sys.argv[1], output_json)
     print(json.dumps(output_json))
 
 
