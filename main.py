@@ -9,7 +9,7 @@ import browser
 #r = regex() #建立正規表達處理物件
 #m = r.match("document.write('https://coin-hive.com');\nalert('coin-have.com')")
 #print(d.call_count, d.char_freq_dict, d.string_len_dict)
-browser.browse("http://159.65.237.98/salvia.i586")
+browser.browse("http://oil.tnepb.gov.tw/")
 
 '''
 subFuncDict = dict()
