@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
-from .import etld
+import etld
 from difflib import SequenceMatcher
 
 debug = False
@@ -40,11 +40,13 @@ def get_title(r):
 def compare(search_result, domain, title):
     for found in search_result:
         found_domain = etld.split(found[1])
-        if domain == found_domain:
+        if domain[0] == found_domain[0]:
             if debug:
                 print("Found site on Google: {}".format(found))
             score = 0
             return score
+        elif debug:
+            print("domain:{}, found domain:{}".format(domain, found_domain))
         d = SequenceMatcher(None, title, found[0])
         if d.ratio() > 0.75:
             if debug:
@@ -83,4 +85,4 @@ def phish_detect(url, d=False):
     return score
 
 if __name__ == '__main__':
-    print(phish_detect("https://www.google.com", False))
+    print(phish_detect("https://bassees.blogspot.com/2018/05/buddymeter.html", True))
