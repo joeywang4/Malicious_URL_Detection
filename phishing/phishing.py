@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as bs
-import etld
+from . import etld
 from difflib import SequenceMatcher
 
 debug = False

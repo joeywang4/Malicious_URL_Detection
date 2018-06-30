@@ -45,6 +45,8 @@ def browse(url, output):
         try:
             browser.set_page_load_timeout(5)
             browser.get(url)
+            with open("source", 'w') as f:
+                f.write(browse.page_source)
             time.sleep(5)
         except:
             if len(os.listdir('tmp')) == 0 and len(browser.page_source) == 0:

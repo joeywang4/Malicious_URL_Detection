@@ -5,18 +5,28 @@ import selenium_browser.browser as browser
 import sys
 import json
 import upload
+import requests
 
 
 if len(sys.argv) > 2 or len(sys.argv) == 1:
     print("usage: python3 main.py [target url]")
 else:
     output_json = {"Phishing Site": 0, \
-                   "Malicious Download": {}, \
+                   "Malicious Download": {"Download": False}, \
                    "Malicious Javascript": {"Drive-by-Download": 0, "Suspicios Code": 0}}
-    d = js_detect(sys.argv[1], True)
-    upload.upload(sys.argv[1], output_json)
-    output_json["Phishing Site"] = phish_detect(sys.argv[1], False)
-    browser.browse(sys.argv[1], output_json)
+    '''
+    get -> geckodriver
+    '''
+    url = sys.argv[1]
+    if upload.is_downloadable(url):
+        r = requests.get(url, allow_redirects=True)
+        upload.upload(r.content, output_json)
+    else:
+        browser.browse(url, output_json)
+        with open("source", 'r') as f:
+            page_source = f.read()
+        d = js_detect(url, True)
+        output_json["Phishing Site"] = phish_detect(sys.argv[1], False)
     print(json.dumps(output_json))
 
 

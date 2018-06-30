@@ -19,7 +19,7 @@ def is_downloadable(url):
 filename = ""
 i = 0
 
-def upload(url, output):
+def upload(content, output):
     apikey = ""
     with open("api_key", "r") as f:
         for line in f:
@@ -31,15 +31,17 @@ def upload(url, output):
     #if(url == 'quit') :
         #break
     #i += 1
+    '''
     if is_downloadable(url) :
         r = requests.get(url, allow_redirects=True)
     else:
         output["Malicious Download"]["Download"] = False
         return
-        #print("Url is not downloadable!")
-        
+        #print("Url is not downloadable!") 
+    '''
+
     params = {'apikey': apikey}
-    files = {'file': (filename, r.content)}
+    files = {'file': (filename, content)}
     response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
     json_response = response.json()
  
