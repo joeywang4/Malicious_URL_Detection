@@ -1,9 +1,11 @@
-import requests
 from bs4 import BeautifulSoup as bs
-from . import etld
+#from . import etld
+import requests
+import etld
 from difflib import SequenceMatcher
 
 debug = False
+file_name = "test.html"
 
 def search(text):
     content = list()
@@ -31,7 +33,7 @@ def search(text):
     return content
 
 def get_title(r):
-    soup = bs(r.text, 'html.parser')
+    soup = bs(r, 'html.parser')
     if soup.title is not None:
         return soup.title.string
     else:
@@ -54,20 +56,11 @@ def compare(search_result, domain, title):
             score = round(100*d.ratio())
             return score
 
-def phish_detect(url, d=False):
+def phish_detect(url, r, d=False):
     global debug
     debug = d
     domain = etld.split(url)
     score = 0
-    if debug:
-        print("Requesting Site...")
-    try:
-        r = requests.get(url, allow_redirects=True)
-        #for i in r.history:
-            #print("Reditecting from:",i.url, "...")
-    except:
-        #print("This site seems to be offline...")
-        return
         
     title = get_title(r)
     if title is not None:
@@ -85,4 +78,4 @@ def phish_detect(url, d=False):
     return score
 
 if __name__ == '__main__':
-    print(phish_detect("https://bassees.blogspot.com/2018/05/buddymeter.html", True))
+    print(phish_detect("https://www.alexa.com/siteinfo/", True))

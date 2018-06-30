@@ -56,7 +56,7 @@ def read_dic(dic):
         return
     elif dic['type'] == 'FunctionDeclaration':
         funcDeclare.append(dic['id']['name'])
-    for key, val in dic.items():
+    for _, val in dic.items():
         if isinstance(val, dict):
             read_dic(val)
         elif isinstance(val, list):
@@ -153,19 +153,15 @@ class js_detect:
         return
     '''
 
-    def __init__(self, url, debug):
+    def __init__(self, url, r, debug):
         self.url = url
         #if debug:
             #print("Requesting Site...")
-        try:
-            r = requests.get(url, allow_redirects=True)
-            #for i in r.history:
-                #print("Reditecting from:",i.url, "...")
-        except:
-            #print("This site seems to be offline...")
-            return
+        r = ""
+        with open(file_name, 'r') as f:
+            r = f.read()
         parser = PyJsParser()
-        soup = bs(r.text, 'html.parser')
+        soup = bs(r, 'html.parser')
         tot_script = ""
         for script in soup.find_all('script'):
             out = ""
