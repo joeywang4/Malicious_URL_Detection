@@ -3,6 +3,7 @@
 .Pip*
 Pipfile.lock
 __pycache__/
+tmp/
 virus
 virus.zip
 api_key
