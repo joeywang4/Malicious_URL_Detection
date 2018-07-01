@@ -38,18 +38,19 @@ def clean_up(curr_name):
 
 def browse(url, output):
     user_os = platform.system()
+    base_path = os.path.normpath(os.path.dirname(__file__)+'/../')+'/'
     if user_os == "Darwin":
         suffix = "mac"
     elif user_os == "Linux":
         suffix = "linux"
     else:
         raise OSError('Unknown OS')
-    if 'tmp' not in os.listdir():
-        os.mkdir('tmp')
+    if 'tmp' not in os.listdir(base_path):
+        os.mkdir(base_path+'tmp')
     hash_val = hashlib.md5(url.encode()).hexdigest()
-    path = 'tmp/'+hash_val+'/'
+    path = base_path+'tmp/'+hash_val+'/'
     os.mkdir(path)
-    with open('selenium_browser/request_type.txt', 'r') as f:
+    with open(base_path+'selenium_browser/request_type.txt', 'r') as f:
         MIME_types = f.readline()
         if MIME_types[-2:] == '\n':
             MIME_types = MIME_types[:-2]
@@ -59,12 +60,12 @@ def browse(url, output):
     profile = webdriver.FirefoxProfile()
     profile.set_preference('browser.download.folderList', 2) # custom location
     profile.set_preference('browser.download.manager.showWhenStarting', False)
-    profile.set_preference('browser.download.dir', os.getcwd()+'/'+path)
+    profile.set_preference('browser.download.dir', path)
     profile.set_preference('browser.helperApps.neverAsk.saveToDisk', MIME_types)
     profile.set_preference("browser.download.manager.showWhenStarting",False)
     profile.set_preference("browser.helperApps.alwaysAsk.force", False)
     # use firefox to get page with javascript generated content
-    with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path="selenium_browser/geckodriver-"+suffix)) as browser:
+    with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path=base_path+"selenium_browser/geckodriver-"+suffix)) as browser:
         try:
             browser.set_page_load_timeout(5)
             browser.get(url)
@@ -88,7 +89,6 @@ def browse(url, output):
             t_thr.join()
             #time.sleep(5)
         except:
-            print(path)
             if len(os.listdir(path)) == 0 and len(browser.page_source) == 0:
                 #print("Connection timed out. This site may be offlined.")
                 return

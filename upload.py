@@ -4,9 +4,16 @@ def is_downloadable(url):
     """
     Does the url contain a downloadable resource
     """
-    h = requests.head(url, allow_redirects=True)
-    header = h.headers
-    content_type = header.get('content-type')
+    try:
+        h = requests.head(url, allow_redirects=True)
+        header = h.headers
+        content_type = header.get('content-type')
+    except requests.exceptions.ConnectionError:
+        print("This website is offline...")
+        exit()
+    except (requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
+        print("Invalid URL")
+        exit()
     if 'text' in content_type.lower():
         return False
     if 'html' in content_type.lower():

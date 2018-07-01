@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup as bs
-from . import etld
+from phishing import etld
+from phishing.alexa import alexa
 import requests
 from difflib import SequenceMatcher
 
@@ -38,7 +39,7 @@ def get_title(r):
     else:
         return None
 
-def compare(search_result, domain, title):
+def compare(search_result, domain, title, rank):
     for found in search_result:
         found_domain = etld.split(found[1])
         if domain[0] == found_domain[0]:
@@ -52,7 +53,7 @@ def compare(search_result, domain, title):
         if d.ratio() > 0.75:
             if debug:
                 print("Found site with similar title: {}".format(found))
-            score = round(100*d.ratio())
+            score = round(rank*d.ratio())
             return score
     return 0
 
@@ -60,14 +61,16 @@ def phish_detect(url, r, d=False):
     global debug
     debug = d
     domain = etld.split(url)
-    score = 100
-        
+
+    rank = alexa(url)
+    if rank is None:
+        rank = 100
     title = get_title(r)
     if title is not None:
         if debug:
             print("Searching for google...")
         search_result = search(title)
-        score = compare(search_result, domain, title)
+        score = compare(search_result, domain, title, rank)
     if debug:
         print("Site url: {}".format(url))
         print("Site title: {}".format(title))

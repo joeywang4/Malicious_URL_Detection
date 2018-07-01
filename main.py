@@ -1,10 +1,10 @@
 from phishing.phishing import phish_detect
 from dbd import js_detect
 from pyjsparser.parser import PyJsParser
-import selenium_browser.browser as browser
+from selenium_browser import browser
+import upload
 import sys
 import json
-import upload
 import requests
 
 
@@ -18,6 +18,7 @@ else:
     get -> geckodriver
     '''
     url = sys.argv[1]
+    print(url)
     if upload.is_downloadable(url):
         r = requests.get(url, allow_redirects=True)
         upload.upload(r.content, output_json)
