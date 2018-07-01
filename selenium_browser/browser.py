@@ -72,7 +72,7 @@ def browse(url, output):
     chromeOptions = webdriver.ChromeOptions()
     prefs = {'download.default_directory': path,'profile.default_content_settings.popups': 0}
     chromeOptions.add_experimental_option('prefs', prefs)
-    chromeOptions.add_argument("--headless")
+    #chromeOptions.add_argument("--headless")
 
     # use firefox to get page with javascript generated content
     #with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path=base_path+"selenium_browser/chromedriver-"+suffix)) as browser:
@@ -80,6 +80,7 @@ def browse(url, output):
         browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
         params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': path}}
         browser.execute("send_command", params)
+        page_source = ""
         try:
             browser.set_page_load_timeout(10)
             browser.get(url)
@@ -103,9 +104,9 @@ def browse(url, output):
             t_thr.join()
             #time.sleep(5)
         except:
-            if len(os.listdir(path)) == 0 and len(browser.page_source) == 0:
-                #print("Connection timed out. This site may be offlined.")
-                return
+            if len(os.listdir(path)) == 0 and len(page_source) == 0:
+                print("{\"Status\": \"Connection timed out\"}")
+                exit()
     
 
         page_source = browser.page_source

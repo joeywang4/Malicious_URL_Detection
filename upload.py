@@ -10,10 +10,10 @@ def is_downloadable(url):
         header = h.headers
         content_type = header.get('content-type')
     except requests.exceptions.ConnectionError:
-        print("This website is offline...")
+        print("{\"Status\": \"Offline\"}")
         exit()
     except (requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
-        print("Invalid URL")
+        print("{\"Status\": \"Invalid URL\"}")
         exit()
     if 'text' in content_type.lower():
         return False
@@ -81,7 +81,7 @@ def upload(content, output):
         #json_response = response.json()
     if response.json()['response_code'] == 1:
         scan_result = response.json()['scans']
-    
+
         #print(scan_result)
         antiList = list(scan_result.keys())
         for anti in antiList :
