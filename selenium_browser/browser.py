@@ -58,6 +58,7 @@ def browse(url, output):
         if MIME_types[-2:] == '\n':
             MIME_types = MIME_types[:-2]
 
+    '''
     options = webdriver.firefox.options.Options()
     options.add_argument("--headless")
     profile = webdriver.FirefoxProfile()
@@ -67,10 +68,20 @@ def browse(url, output):
     profile.set_preference('browser.helperApps.neverAsk.saveToDisk', MIME_types)
     profile.set_preference("browser.download.manager.showWhenStarting",False)
     profile.set_preference("browser.helperApps.alwaysAsk.force", False)
+    '''
+    chromeOptions = webdriver.ChromeOptions()
+    prefs = {'download.default_directory': path,'profile.default_content_settings.popups': 0}
+    chromeOptions.add_experimental_option('prefs', prefs)
+    chromeOptions.add_argument("--headless")
+
     # use firefox to get page with javascript generated content
-    with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path=base_path+"selenium_browser/geckodriver-"+suffix)) as browser:
+    #with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path=base_path+"selenium_browser/chromedriver-"+suffix)) as browser:
+    with closing(webdriver.Chrome(chrome_options=chromeOptions, executable_path=base_path+"selenium_browser/chromedriver-"+suffix)) as browser:
+        browser.command_executor._commands["send_command"] = ("POST", '/session/$sessionId/chromium/send_command')
+        params = {'cmd': 'Page.setDownloadBehavior', 'params': {'behavior': 'allow', 'downloadPath': path}}
+        browser.execute("send_command", params)
         try:
-            browser.set_page_load_timeout(15)
+            browser.set_page_load_timeout(10)
             browser.get(url)
             page_source = browser.page_source
             

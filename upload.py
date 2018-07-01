@@ -35,7 +35,7 @@ def upload(content, output):
             line = line.split()
             if line[0] == 'virus_total':
                 keys.append(line[1])
-    filename = "suspicious_file" #+ chr(i) #i<256
+    filename = "suspicious_file1" #+ chr(i) #i<256
     #url = input("Suspicious url : ")
     #if(url == 'quit') :
         #break
@@ -60,14 +60,14 @@ def upload(content, output):
         except:
             pass
     
-    if i != 0:
+    if avail != 0:
         with open(base_path+"api_key", 'w') as f:
-            num = i
+            num = avail
             while num < len(keys):
                 f.write("virus_total {}\n".format(keys[num]))
                 num+=1
             num = 0
-            while num < i:
+            while num < avail:
                 f.write("virus_total {}\n".format(keys[num]))
                 num+=1
  
@@ -79,13 +79,14 @@ def upload(content, output):
     response = requests.get('https://www.virustotal.com/vtapi/v2/file/report',
         params=params, headers=headers)
         #json_response = response.json()
-    scan_result = response.json()['scans']
-
-    #print(scan_result)
-    antiList = list(scan_result.keys())
-    for anti in antiList :
-        output["Malicious Download"][anti] = scan_result[anti]['detected']
-        #print(anti + " detected " + scan_result[anti]['result'])
-        #print("detected rate : " + str(count) + "/" + str(j))
+    if response.json()['response_code'] == 1:
+        scan_result = response.json()['scans']
+    
+        #print(scan_result)
+        antiList = list(scan_result.keys())
+        for anti in antiList :
+            output["Malicious Download"][anti] = scan_result[anti]['detected']
+            #print(anti + " detected " + scan_result[anti]['result'])
+            #print("detected rate : " + str(count) + "/" + str(j))
     output["Malicious Download"]["Download"] = True
     return output
