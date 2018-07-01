@@ -54,7 +54,7 @@ def browse(url, output):
         MIME_types = f.readline()
         if MIME_types[-2:] == '\n':
             MIME_types = MIME_types[:-2]
-    
+
     options = webdriver.firefox.options.Options()
     options.add_argument("--headless")
     profile = webdriver.FirefoxProfile()
@@ -67,7 +67,7 @@ def browse(url, output):
     # use firefox to get page with javascript generated content
     with closing(webdriver.Firefox(firefox_options=options, firefox_profile=profile, executable_path=base_path+"selenium_browser/geckodriver-"+suffix)) as browser:
         try:
-            browser.set_page_load_timeout(5)
+            browser.set_page_load_timeout(15)
             browser.get(url)
             page_source = browser.page_source
             

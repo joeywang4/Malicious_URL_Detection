@@ -5,7 +5,7 @@ def is_downloadable(url):
     Does the url contain a downloadable resource
     """
     try:
-        h = requests.head(url, allow_redirects=True)
+        h = requests.get(url, allow_redirects=True)
         header = h.headers
         content_type = header.get('content-type')
     except requests.exceptions.ConnectionError:

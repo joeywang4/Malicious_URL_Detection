@@ -18,7 +18,6 @@ else:
     get -> geckodriver
     '''
     url = sys.argv[1]
-    print(url)
     if upload.is_downloadable(url):
         r = requests.get(url, allow_redirects=True)
         upload.upload(r.content, output_json)

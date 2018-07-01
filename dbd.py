@@ -155,8 +155,6 @@ class js_detect:
 
     def __init__(self, url, r, debug=False):
         self.url = url
-        #if debug:
-            #print("Requesting Site...")
         parser = PyJsParser()
         soup = bs(r, 'html.parser')
         tot_script = ""
@@ -164,10 +162,15 @@ class js_detect:
             out = ""
             try:
                 out = script['src']
+                if debug:
+                    print("getting outer js")
+                #getting scripts not in site
+                '''
                 if out[:4] != "http":
                     tot_script = get_outer_js(urljoin(self.url, out))
                 else:
                     tot_script = get_outer_js(out)
+                '''
             except:
                 tot_script = script.get_text()
             if True:

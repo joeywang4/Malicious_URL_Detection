@@ -4,7 +4,8 @@ class regex:
     pattern_tuple = list()
 
     def __init__(self):
-        with open("regex.txt", 'r') as f:
+        base_path = os.path.normpath(os.path.dirname(__file__)+'/../')+'/'
+        with open(base_path+"regex.txt", 'r') as f:
             for line in f:
                 s = line.split(maxsplit=1)
                 if len(s) == 2 and s[0][0] != '#':

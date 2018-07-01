@@ -21,7 +21,11 @@ def alexa(url):
                 info = info[:f]+'F'+info[f+1:]
                 f = info.find('false')
             info = eval(info)
-            return None if info['siteinfo']['rank']['global'] == False else 100*math.log10(info['siteinfo']['rank']['global'])/7
+            if info['siteinfo']['rank']['global'] == False :
+                return None 
+            else:
+                a = math.log10(info['siteinfo']['rank']['global'])
+                return 100*pow(a, 0.5)/pow(7, 0.5)
     return None
 
 if __name__ == "__main__":
