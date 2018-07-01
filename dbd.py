@@ -140,7 +140,7 @@ def string_to_int_compare(s1, s2):
 #####################################
 class js_detect:
     url = ""
-    debug = True
+    debug = False
     call_count = list()
     sub_func_dict = dict()
     char_freq_dict = dict()
@@ -153,13 +153,10 @@ class js_detect:
         return
     '''
 
-    def __init__(self, url, r, debug):
+    def __init__(self, url, r, debug=False):
         self.url = url
         #if debug:
             #print("Requesting Site...")
-        r = ""
-        with open(file_name, 'r') as f:
-            r = f.read()
         parser = PyJsParser()
         soup = bs(r, 'html.parser')
         tot_script = ""

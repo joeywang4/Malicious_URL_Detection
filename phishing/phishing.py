@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup as bs
-#from . import etld
+from . import etld
 import requests
-import etld
 from difflib import SequenceMatcher
 
 debug = False
@@ -55,12 +54,13 @@ def compare(search_result, domain, title):
                 print("Found site with similar title: {}".format(found))
             score = round(100*d.ratio())
             return score
+    return 0
 
 def phish_detect(url, r, d=False):
     global debug
     debug = d
     domain = etld.split(url)
-    score = 0
+    score = 100
         
     title = get_title(r)
     if title is not None:

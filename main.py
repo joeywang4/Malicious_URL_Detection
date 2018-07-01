@@ -23,10 +23,10 @@ else:
         upload.upload(r.content, output_json)
     else:
         browser.browse(url, output_json)
-        with open("source", 'r') as f:
-            page_source = f.read()
-        d = js_detect(url, True)
-        output_json["Phishing Site"] = phish_detect(sys.argv[1], False)
+        #with open("source", 'r') as f:
+        #    page_source = f.read()
+        #d = js_detect(url, True)
+        #output_json["Phishing Site"] = phish_detect(sys.argv[1], False)
     print(json.dumps(output_json))
 
 

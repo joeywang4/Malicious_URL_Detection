@@ -3,6 +3,28 @@ from contextlib import closing
 from selenium import webdriver
 import time
 import platform
+from phishing.phishing import phish_detect
+from dbd import js_detect
+from pyjsparser.parser import PyJsParser
+import upload
+import threading
+import hashlib
+
+def null():
+    return
+
+class ThreadWithReturnValue(threading.Thread):
+    def __init__(self, group=None, target=None, name=None,
+                 args=(), kwargs={}, Verbose=None):
+        threading.Thread.__init__(self, group, target, name, args, kwargs)
+        self._return = None
+    def run(self):
+        #print(type(self._target))
+        if self._target is not None:
+            self._return = self._target(*self._args, **self._kwargs)
+    def join(self):
+        threading.Thread.join(self)
+        return self._return
 
 def clean_up(curr_name):
     for f in os.listdir(curr_name):
@@ -22,10 +44,11 @@ def browse(url, output):
         suffix = "linux"
     else:
         raise OSError('Unknown OS')
-    if 'tmp' in os.listdir():
-        clean_up('tmp')
-    else:
+    if 'tmp' not in os.listdir():
         os.mkdir('tmp')
+    hash_val = hashlib.md5(url.encode()).hexdigest()
+    path = 'tmp/'+hash_val+'/'
+    os.mkdir(path)
     with open('selenium_browser/request_type.txt', 'r') as f:
         MIME_types = f.readline()
         if MIME_types[-2:] == '\n':
@@ -36,7 +59,7 @@ def browse(url, output):
     profile = webdriver.FirefoxProfile()
     profile.set_preference('browser.download.folderList', 2) # custom location
     profile.set_preference('browser.download.manager.showWhenStarting', False)
-    profile.set_preference('browser.download.dir', os.getcwd()+'/tmp')
+    profile.set_preference('browser.download.dir', os.getcwd()+'/'+path)
     profile.set_preference('browser.helperApps.neverAsk.saveToDisk', MIME_types)
     profile.set_preference("browser.download.manager.showWhenStarting",False)
     profile.set_preference("browser.helperApps.alwaysAsk.force", False)
@@ -45,11 +68,28 @@ def browse(url, output):
         try:
             browser.set_page_load_timeout(5)
             browser.get(url)
-            with open("source", 'w') as f:
-                f.write(browse.page_source)
-            time.sleep(5)
+            page_source = browser.page_source
+            
+            t_thr = threading.Timer(5, null)
+            js_thr = threading.Thread(target=js_detect, args=(url, page_source))
+            ph_thr = ThreadWithReturnValue(target=phish_detect, args=(url, page_source))
+            '''
+            js_thr = threading.Thread(target=test, args=(3, 4))
+            ph_thr = threading.Thread(target=test, args=(2, 7))
+            '''
+            
+            t_thr.start()
+            ph_thr.start()
+            
+            js_thr.start()
+            js_thr.join()
+            
+            output["Phishing Site"] = ph_thr.join()
+            t_thr.join()
+            #time.sleep(5)
         except:
-            if len(os.listdir('tmp')) == 0 and len(browser.page_source) == 0:
+            print(path)
+            if len(os.listdir(path)) == 0 and len(browser.page_source) == 0:
                 #print("Connection timed out. This site may be offlined.")
                 return
     
@@ -58,7 +98,13 @@ def browse(url, output):
         #print("source length: ",len(page_source))
         #if len(page_source) < 100:
             #print("source:", page_source)
-        for f in os.listdir('tmp'):
+        for f in os.listdir(path):
+            #only test first file
+            with open(path + f, 'rb') as file:
+                upload.upload(file.read(), output)
             output["Malicious Javascript"]["Drive-by-Download"] = 100
+            break
             #print("Downloaded: {}".format(f))
+        clean_up(path)
+        os.rmdir(path)
     return output
