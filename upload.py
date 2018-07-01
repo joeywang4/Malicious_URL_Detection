@@ -28,13 +28,13 @@ filename = ""
 i = 0
 
 def upload(content, output):
-    apikey = ""
     base_path = os.path.normpath(os.path.dirname(__file__))+'/'
+    keys = list()
     with open(base_path+"api_key", "r") as f:
         for line in f:
             line = line.split()
             if line[0] == 'virus_total':
-                apikey = line[1]
+                keys.append(line[1])
     filename = "suspicious_file" #+ chr(i) #i<256
     #url = input("Suspicious url : ")
     #if(url == 'quit') :
@@ -48,15 +48,28 @@ def upload(content, output):
         return
         #print("Url is not downloadable!") 
     '''
-
-    params = {'apikey': apikey}
-    files = {'file': (filename, content)}
-    response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
-    try:
-        json_response = response.json()
-    except:
-        print("Error API KEY")
-        exit()
+    avail = 0
+    for i in range(len(keys)):
+        apikey = keys[i]
+        params = {'apikey': apikey}
+        files = {'file': (filename, content)}
+        response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
+        try:
+            json_response = response.json()
+            avail = i
+        except:
+            pass
+    
+    if i != 0:
+        with open(base_path+"api_key", 'w') as f:
+            num = i
+            while num < len(keys):
+                f.write("virus_total {}\n".format(keys[num]))
+                num+=1
+            num = 0
+            while num < i:
+                f.write("virus_total {}\n".format(keys[num]))
+                num+=1
  
     params = {'apikey': apikey, 'resource': json_response["resource"]}
     headers = {
