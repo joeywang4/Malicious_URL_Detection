@@ -49,7 +49,10 @@ def browse(url, output):
         os.mkdir(base_path+'tmp')
     hash_val = hashlib.md5(url.encode()).hexdigest()
     path = base_path+'tmp/'+hash_val+'/'
-    os.mkdir(path)
+    if hash_val not in os.listdir(base_path+'tmp/'):
+        os.mkdir(path)
+    else:
+        clean_up(path)
     with open(base_path+'selenium_browser/request_type.txt', 'r') as f:
         MIME_types = f.readline()
         if MIME_types[-2:] == '\n':
@@ -72,7 +75,7 @@ def browse(url, output):
             page_source = browser.page_source
             
             t_thr = threading.Timer(5, null)
-            js_thr = threading.Thread(target=js_detect, args=(url, page_source))
+            js_thr = ThreadWithReturnValue(target=js_detect, args=(url, page_source))
             ph_thr = ThreadWithReturnValue(target=phish_detect, args=(url, page_source))
             '''
             js_thr = threading.Thread(target=test, args=(3, 4))
@@ -83,8 +86,8 @@ def browse(url, output):
             ph_thr.start()
             
             js_thr.start()
-            js_thr.join()
             
+            output["Regex Match"] = js_thr.join()
             output["Phishing Site"] = ph_thr.join()
             t_thr.join()
             #time.sleep(5)

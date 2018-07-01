@@ -1,10 +1,11 @@
 import re
+import os
 
 class regex:
     pattern_tuple = list()
 
     def __init__(self):
-        base_path = os.path.normpath(os.path.dirname(__file__)+'/../')+'/'
+        base_path = os.path.dirname(__file__)+'/'
         with open(base_path+"regex.txt", 'r') as f:
             for line in f:
                 s = line.split(maxsplit=1)

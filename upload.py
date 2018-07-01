@@ -1,4 +1,5 @@
 import requests
+import os
 
 def is_downloadable(url):
     """
@@ -28,7 +29,8 @@ i = 0
 
 def upload(content, output):
     apikey = ""
-    with open("api_key", "r") as f:
+    base_path = os.path.normpath(os.path.dirname(__file__))+'/'
+    with open(base_path+"api_key", "r") as f:
         for line in f:
             line = line.split()
             if line[0] == 'virus_total':
@@ -50,7 +52,11 @@ def upload(content, output):
     params = {'apikey': apikey}
     files = {'file': (filename, content)}
     response = requests.post('https://www.virustotal.com/vtapi/v2/file/scan', files=files, params=params)
-    json_response = response.json()
+    try:
+        json_response = response.json()
+    except:
+        print("Error API KEY")
+        exit()
  
     params = {'apikey': apikey, 'resource': json_response["resource"]}
     headers = {

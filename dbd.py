@@ -138,7 +138,8 @@ def string_to_int_compare(s1, s2):
     return int(s1) - int(s2)
 
 #####################################
-class js_detect:
+def js_detect(url, r, debug=False):
+    '''
     url = ""
     debug = False
     call_count = list()
@@ -146,51 +147,38 @@ class js_detect:
     char_freq_dict = dict()
     string_len_dict = dict()
     parsed = ""
-
+    reg_result = ""
     '''
-    def stat(self, script):
-        read_dic(script)
-        return
-    '''
-
-    def __init__(self, url, r, debug=False):
-        self.url = url
-        parser = PyJsParser()
-        soup = bs(r, 'html.parser')
-        tot_script = ""
-        for script in soup.find_all('script'):
-            out = ""
-            try:
-                out = script['src']
-                if debug:
-                    print("getting outer js")
-                #getting scripts not in site
-                '''
-                if out[:4] != "http":
-                    tot_script = get_outer_js(urljoin(self.url, out))
-                else:
-                    tot_script = get_outer_js(out)
-                '''
-            except:
-                tot_script = script.get_text()
-            if True:
-                try:
-                    if tot_script != "":
-                        count_char(tot_script)
-                        a = parser.parse(tot_script)
-                        read_dic_2(a)
-                        read_dic(a)
-                except:
-                    #print("Encounter error while parsing {}".format(out))
-                    #print(a)
-                    exit()
+    parser = PyJsParser()
+    soup = bs(r, 'html.parser')
+    tot_script = ""
+    for script in soup.find_all('script'):
+        out = ""
+        try:
+            out = script['src']
+            if debug:
+                print("getting outer js")
+            #getting scripts not in site
+            '''
+            if out[:4] != "http":
+                tot_script = get_outer_js(urljoin(self.url, out))
             else:
-                if tot_script != "":
-                        count_char(tot_script)
-                        a = parser.parse(tot_script)
-                        read_dic(a)
-                        read_dic_2(a)
-        self.sub_func_dict = subFuncDict
-        self.call_count  = [(k, FuncCallTimes[k]) for k in sorted(FuncCallTimes, key=FuncCallTimes.get, reverse=True)]
-        self.char_freq_dict = [(k, CharFreqDict[k]) for k in sorted(CharFreqDict, key=CharFreqDict.get, reverse=True)]
-        self.string_len_dict = [(k, StringLenDict[k]) for k in sorted(StringLenDict, key=cmp_to_key(string_to_int_compare), reverse=True)]
+                tot_script = get_outer_js(out)
+            '''
+        except:
+            tot_script += script.get_text()
+    
+    reg_result = []
+    if tot_script != "":
+        '''
+        count_char(tot_script)
+        a = parser.parse(tot_script)
+        read_dic_2(a)
+        read_dic(a)
+        '''
+        reg_result = regex().match(tot_script)
+    return reg_result        
+'''    sub_func_dict = subFuncDict
+    call_count  = [(k, FuncCallTimes[k]) for k in sorted(FuncCallTimes, key=FuncCallTimes.get, reverse=True)]
+    char_freq_dict = [(k, CharFreqDict[k]) for k in sorted(CharFreqDict, key=CharFreqDict.get, reverse=True)]
+    string_len_dict = [(k, StringLenDict[k]) for k in sorted(StringLenDict, key=cmp_to_key(string_to_int_compare), reverse=True)]'''

@@ -8,6 +8,7 @@ IP_GrandSoft	185\.17\.122\.212
 Headers_GreenFlash_Sundown	5a0c76d6-117
 
 ## Web Miners / Drive-by mining
+omine_miner OMINE
 URI_Coin_Have coin-have\.com
 URI_Coinhive	https:\/\/((cnhv\.co|coin-?hive\.com)|ws[0-9]{1,3}\.coinhive\.com\/proxy)
 URI_CoinImp_Web_Miner	hashing\.win\/|pastebin\.com\/raw\/VXm4051W

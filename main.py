@@ -13,7 +13,8 @@ if len(sys.argv) > 2 or len(sys.argv) == 1:
 else:
     output_json = {"Phishing Site": 0, \
                    "Malicious Download": {"Download": False}, \
-                   "Malicious Javascript": {"Drive-by-Download": 0, "Suspicios Code": 0}}
+                   "Malicious Javascript": {"Drive-by-Download": 0, "Suspicios Code": 0}, \
+                   "Regex Match": list()}
     '''
     get -> geckodriver
     '''
