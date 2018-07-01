@@ -45,6 +45,8 @@ def compare(search_result, domain, title, rank):
     score = 0
     for found in search_result:
         found_domain = etld.split(found[1])
+        if found_domain is None:
+            continue
         if domain[0] == found_domain[0]:
             if debug:
                 print("Found site on Google: {}".format(found))
