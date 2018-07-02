@@ -80,6 +80,7 @@ def phish_detect(url, r, d=False):
     global debug
     debug = d
     domain = etld.split(url)
+    score = 0
 
     rank = alexa(url)
     if rank is None:

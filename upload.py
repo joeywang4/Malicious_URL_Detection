@@ -10,10 +10,13 @@ def is_downloadable(url):
         header = h.headers
         content_type = header.get('content-type')
     except requests.exceptions.ConnectionError:
-        print("{\"Status\": \"Offline\"}")
-        exit()
+        if url[:5] != "https":
+            print("{\"Status\": \"Offline\"}")
+            exit() 
+        else:
+            return False
     except (requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
-        print("{\"Status\": \"Invalid URL\"}")
+        print("{\"Status\": \"Invalid URL, please start with http://...\"}")
         exit()
     if 'text' in content_type.lower():
         return False
