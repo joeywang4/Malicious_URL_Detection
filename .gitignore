@@ -6,7 +6,6 @@ __pycache__/
 tmp/
 virus
 virus.zip
-api_key
 note
 test*
 geckodriver.log
