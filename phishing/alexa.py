@@ -13,6 +13,8 @@ def alexa(url):
     for script in soup.find_all('script', type="text/javascript"):
         sc = script.string
         if sc is not None:
+            if "siteinfo" not in sc:
+                return None
             beg = sc.find("{\"siteinfo\"")
             end = sc.find(",\"rating\"")
             info = sc[beg:end]+"}}"

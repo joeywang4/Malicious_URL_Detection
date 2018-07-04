@@ -9,8 +9,9 @@ def is_downloadable(url):
         h = requests.get(url, allow_redirects=True)
         header = h.headers
         content_type = header.get('content-type')
-    except requests.exceptions.ConnectionError:
-        if url[:5] != "https":
+    except requests.exceptions.ConnectionError as err:
+        err_msg = "{}".format(err)
+        if "Max retries exceeded" in err_msg:
             print("{\"Status\": \"Offline\"}")
             exit() 
         else:

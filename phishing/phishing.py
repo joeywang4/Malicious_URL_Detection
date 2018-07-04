@@ -47,6 +47,8 @@ def compare(search_result, domain, title, rank):
         found_domain = etld.split(found[1])
         if found_domain is None:
             continue
+        elif domain is None:
+            break
         if domain[0] == found_domain[0]:
             if debug:
                 print("Found site on Google: {}".format(found))
@@ -102,4 +104,4 @@ def phish_detect(url, r, d=False):
     return score
 
 if __name__ == '__main__':
-    print(phish_detect("https://www.alexa.com/siteinfo/", True))
+    print(phish_detect("http://palabrasdevida.com.br/secureddocument/5e7c6d80ab9ccdc40b5e5c8b4042a560/", requests.get("http://palabrasdevida.com.br/secureddocument/5e7c6d80ab9ccdc40b5e5c8b4042a560/").text, True))

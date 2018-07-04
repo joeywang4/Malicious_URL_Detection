@@ -4,6 +4,7 @@
 Pipfile.lock
 __pycache__/
 tmp/
+api_key
 virus
 virus.zip
 note
